@@ -26,10 +26,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/jobseekers/{jobseeker_id}/remove', 'Dashboard\JobseekersController@removeJobseeker');
 
     Route::get('/job-posts', 'Dashboard\JobpostController@index');
-    Route::get('/job-posts/add', 'Dashboard\JobpostController@addPostView');
     Route::post('/job-posts/add', 'Dashboard\JobpostController@addPost');
     Route::get('/job-posts/{post_id}/view', 'Dashboard\JobpostController@viewPost');
-    Route::get('/job-posts/{post_id}/edit', 'Dashboard\JobpostController@editPostView');
     Route::post('/job-posts/{post_id}/edit', 'Dashboard\JobpostController@editPost');
     Route::get('/job-posts/{post_id}/remove', 'Dashboard\JobpostController@remove');
 });

@@ -22,7 +22,7 @@
 <body>
 
 
-
+    @yield('modal')
 
     <header class="navbar navbar-dark navbar-full bg-primary doc-navbar-default">
         <button id="drawer_switcher" aria-controls="navdrawerDefault" aria-expanded="false"

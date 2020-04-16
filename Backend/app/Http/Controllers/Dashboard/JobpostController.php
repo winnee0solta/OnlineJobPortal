@@ -65,7 +65,6 @@ class JobpostController extends Controller
             if ($rpost->admin_post) {
                 if (AdminjobpostData::where('post_id', $rpost->id)->count() == 0) {
                     $rpost->delete();
-
                 }
                 $info = AdminjobpostData::where('post_id', $rpost->id)->first();
                 $company_name =  $info->company_name;
@@ -74,7 +73,6 @@ class JobpostController extends Controller
             } else {
                 if (EmployeerInfo::where('user_id', $rpost->user_id)->count() == 0) {
                     $rpost->delete();
-
                 }
                 $info =  EmployeerInfo::where('user_id', $rpost->user_id)->first();
                 $company_name =  $info->company_name;
@@ -99,30 +97,100 @@ class JobpostController extends Controller
                 'created_at' => $rpost->created_at,
             );
 
-            return view('dashboard.jobposts.single',compact('post'));
+            return view('dashboard.jobposts.single', compact('post'));
         }
         return redirect('/job-posts');
     }
-    public function addPostView()
+    public function addPost(Request $request)
     {
-        return view('dashboard.jobposts.add');
-    }
-    public function addPost()
-    {
+        //validate
+        $request->validate([
+            'jobtitle' => 'required',
+            'jobtype' => 'required',
+            'designation' => 'required',
+            'qualification' => 'required',
+            'specialization' => 'required',
+            'skills' => 'required',
+            'lastdate' => 'required',
+            'desc' => 'required',
+            'company_name' => 'required',
+            'company_address' => 'required',
+            'company_phone' => 'required',
+        ]);
+
+
+
+        $job = new JobPosts();
+        $job->user_id = 0;
+        $job->admin_post = true;
+        $job->jobtitle = $request->jobtitle;
+        $job->jobtype = $request->jobtype;
+        $job->designation = $request->designation;
+        $job->qualification = $request->qualification;
+        $job->specialization = $request->specialization;
+        $job->skills = $request->skills;
+        $job->lastdate = $request->lastdate;
+        $job->desc = $request->desc;
+        $job->save();
+
+        $adminpost = new AdminjobpostData();
+        $adminpost->post_id = $job->id;
+        $adminpost->company_name = $request->company_name;
+        $adminpost->company_address = $request->company_address;
+        $adminpost->company_phone = $request->company_phone;
+        $adminpost->save();
+
         return redirect('/job-posts');
     }
-    public function editPostView($post_id)
+    public function editPost($post_id, Request $request)
     {
-        return view('dashboard.jobposts.edit');
-    }
-    public function editPost($post_id)
-    {
+        //validate
+        $request->validate([
+            'jobtitle' => 'required',
+            'jobtype' => 'required',
+            'designation' => 'required',
+            'qualification' => 'required',
+            'specialization' => 'required',
+            'skills' => 'required',
+            'lastdate' => 'required',
+            'desc' => 'required',
+        ]);
+
+
+
+        $job =  JobPosts::find($post_id);
+        $job->jobtitle = $request->jobtitle;
+        $job->jobtype = $request->jobtype;
+        $job->designation = $request->designation;
+        $job->qualification = $request->qualification;
+        $job->specialization = $request->specialization;
+        $job->skills = $request->skills;
+        $job->lastdate = $request->lastdate;
+        $job->desc = $request->desc;
+        $job->save();
+
+        if ($job->admin_post) {
+
+            $adminpost = AdminjobpostData::where('post_id', $job->id)->first();
+            $adminpost->post_id = $job->id;
+            $adminpost->company_name = $request->company_name;
+            $adminpost->company_address = $request->company_address;
+            $adminpost->company_phone = $request->company_phone;
+            $adminpost->save();
+        }
+
         return redirect('/job-posts');
     }
 
     public function remove($post_id)
     {
-        JobPosts::where('id', $post_id)->delete();
+        $job =  JobPosts::find($post_id);
+        if ($job) {
+            if ($job->admin_post) {
+                AdminjobpostData::where('post_id', $job->id)->delete();
+            }
+            $job->delete();
+        }
         return redirect('/job-posts');
     }
 }
