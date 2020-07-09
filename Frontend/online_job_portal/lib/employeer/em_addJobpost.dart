@@ -27,7 +27,7 @@ class _EmAddJobPostState extends State<EmAddJobPost> {
   final skills = TextEditingController();
   final lastdate = TextEditingController();
   final desc = TextEditingController();
-
+ 
   DateTime selectedDate = DateTime.now();
 
   @override

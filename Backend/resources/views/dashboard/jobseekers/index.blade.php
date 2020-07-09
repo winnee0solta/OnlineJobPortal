@@ -25,6 +25,7 @@
                 <th scope="col">Fullname</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Address</th>
+                <th scope="col">CV</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -39,6 +40,13 @@
                 <td>{{$item['fullname']}}</td>
                 <td>{{$item['phone_no']}}</td>
                 <td>{{$item['address']}}</td>
+                <td>
+                    @if ($item['cv'] == 'no')
+                        no
+                    @else
+                    <a href="/images/jobseeker/cv/{{$item['cv']}}" target="_blank">CV</a>
+                    @endif
+                </td>
                 <td>
                     <a href="/jobseekers/{{$item['jobseekers_id']}}/remove" class="btn btn-float btn-danger btn-sm " type="button"><i
                             class="material-icons">delete</i></a>

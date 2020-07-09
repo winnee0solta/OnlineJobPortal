@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\JobSeekerCv;
 use App\JobseekerInfo;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class JobseekersController extends Controller
 {
@@ -17,6 +19,13 @@ class JobseekersController extends Controller
 
             $info = JobseekerInfo::where('user_id', $user->id)->first();
 
+            $cv = 'no';
+            if (JobSeekerCv::where('jobseeker_id', $info->id)->count() > 0) {
+                $cvinfo = JobSeekerCv::where('jobseeker_id', $info->id)->first();
+                //remove old file
+                $cv =$cvinfo->cv;
+            }
+
             if ($info) {
 
                 array_push($jobseekers, array(
@@ -27,6 +36,7 @@ class JobseekersController extends Controller
                     'fullname' => $info->fullname,
                     'phone_no' => $info->phone_no,
                     'address' => $info->address,
+                    'cv' => $cv,
                 ));
             } else {
                 $user->delete();

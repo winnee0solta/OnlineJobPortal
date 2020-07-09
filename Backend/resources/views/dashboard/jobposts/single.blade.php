@@ -168,6 +168,57 @@
 </div>
 
 
+<div class="row justify-content-center mb-5">
+    <div class="col-12 col-md-8">
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="h5 font-weight-bold">Applied Jobseekers</h5>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>
+                                    S.N
+                                </th>
+                                <th>Applied at</th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                                <th>Cv</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($appliedjobseekers as $item)
+                            <tr>
+                                <td>{{$loop->index + 1}}</td>
+                                <td>
+                                    {{$item['created_at']}}
+                                </td>
+                                <td>{{$item['fullname']}}</td>
+                                <td>{{$item['address']}}</td>
+                                <td>{{$item['phone_no']}}</td>
+                              <td>
+                                  @if ($item['cv'] == 'no')
+                                    no
+                                    @else
+                                    <a href="/images/jobseeker/cv/{{$item['cv']}}" target="_blank">CV</a>
+                                    @endif
+                              </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 
 

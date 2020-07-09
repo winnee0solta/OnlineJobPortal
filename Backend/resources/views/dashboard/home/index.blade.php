@@ -7,7 +7,7 @@
         <div class="card" >
             <div class="card-body">
                 <h4 class="card-title text-uppercase text-center font-weight-bold mb-1">Jobs Posts</h4>
-                <p class="card-text text-center h3">100</p>
+                <p class="card-text text-center h3">{{$jobpostcount}}</p>
             </div>
         </div>
     </div>
@@ -15,7 +15,7 @@
         <div class="card" >
             <div class="card-body">
                 <h4 class="card-title text-uppercase text-center font-weight-bold mb-1">Jobseekers</h4>
-                <p class="card-text text-center h3">100</p>
+                <p class="card-text text-center h3">{{$jobseekerscount}}</p>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
         <div class="card" >
             <div class="card-body">
                 <h4 class="card-title text-uppercase text-center font-weight-bold mb-1">Employers</h4>
-                <p class="card-text text-center h3">100</p>
+                <p class="card-text text-center h3">{{$employeercount}}</p>
             </div>
         </div>
     </div>

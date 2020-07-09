@@ -51,24 +51,24 @@ class _EHomeScreenState extends State<EHomeScreen> {
       ),
       body: isloading
           ? LoadingLayout()
-          : jobposts.length == 0
-              ? Center(
-                  child: Text(
-                  'No Posts !',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ))
-              : RefreshIndicator(
-                  key: _refreshIndicatorKey,
-                  onRefresh: _refresh,
-                  child: Container(
+          : RefreshIndicator(
+              key: _refreshIndicatorKey,
+              onRefresh: _refresh,
+              child: jobposts.length == 0
+                  ? Center(
+                      child: Text(
+                      'No Posts !',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ))
+                  : Container(
                       color: Color(0xfff2f3f5),
                       child: ListView.builder(
                         itemCount: jobposts.length,
                         itemBuilder: _buildItemsForListView,
                       )),
-                ),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -216,8 +216,15 @@ class _EHomeScreenState extends State<EHomeScreen> {
   }
 
   Future<List<JobPost>> _fetchPosts() async {
-    var url = ApiHelper.jobPosts;
-    var response = await http.get(url, headers: {'Accept': 'application/json'});
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userid = prefs.getInt('user_id');
+
+    var url = ApiHelper.emJobPosts;
+    var response = await http.post(url, body: {
+      'user_id': userid.toString(), //need to send as string
+    }, headers: {
+      'Accept': 'application/json'
+    });
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,

@@ -89,6 +89,9 @@ class _SplashScreenState extends State<SplashScreen> {
             MaterialPageRoute(builder: (context) => UnverifiedAccount()),
           );
         }
+      }else if(data['status'] == 401){
+        prefs.clear();
+        checkIfAuthenticated();
       }
     }
   }

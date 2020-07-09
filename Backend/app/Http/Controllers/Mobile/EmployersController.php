@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Mobile;
 
+use App\ApplyForJobs;
 use App\EmployeerInfo;
 use App\EmployerMapData;
 use App\Http\Controllers\Controller;
 use App\JobPosts;
+use App\JobSeekerCv;
+use App\JobseekerInfo;
 use App\User;
 use App\UserVerifiedData;
 use App\VerifiedEmployers;
@@ -246,10 +249,69 @@ class EmployersController extends Controller
 
             $job =  JobPosts::find($request->post_id);
             if ($job) {
+                //remove applied jobseekers
+               ApplyForJobs::where('job_id', $request->post_id)->delete(); 
                 $job->delete();
                 $response = array(
                     'status' => 200,
                     'message' => 'OK'
+                );
+                return Response($response);
+            }
+
+            $response = array(
+                'status' => 200,
+                'message' => 'OK'
+            );
+            return Response($response);
+        }
+        $response = array(
+            'status' => 404,
+            'message' => 'Some error occured.',
+        );
+        return Response($response);
+    }
+    public function  appliedJobseekers(Request $request)
+    {
+        //validate
+        $request->validate([
+            'user_id' => 'required',
+            'post_id' => 'required',
+        ]);
+
+
+        $user = User::find($request->user_id);
+        if ($user) {
+
+            $job =  JobPosts::find($request->post_id);
+            if ($job) {
+                $datas = array();
+                foreach (ApplyForJobs::where('job_id', $request->post_id)->get() as $applcation) {
+
+                    $jobseekerinfo = JobseekerInfo::where('user_id', $applcation->jobseeker_id)->first();
+                    if ($jobseekerinfo) {
+
+                        $cv = 'no';
+                        $cvinfo = JobSeekerCv::where('jobseeker_id', $jobseekerinfo->id)->first();
+                        if ($cvinfo) {
+                            $cv = $cvinfo->cv;
+                        }
+
+                        array_push($datas, array(
+                            'jobseeker_id' => $applcation->jobseeker_id,
+                            'fullname' => $jobseekerinfo->fullname,
+                            'phone_no' => $jobseekerinfo->phone_no,
+                            'address' => $jobseekerinfo->address,
+                            'cv' => $cv,
+                        ));
+                    }
+                }
+
+
+                $response = array(
+                    'status' => 200,
+                    'message' => 'OK',
+                    'datas' => $datas
                 );
                 return Response($response);
             }

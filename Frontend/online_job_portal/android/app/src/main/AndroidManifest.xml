@@ -6,9 +6,12 @@
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
          <uses-permission android:name="android.permission.INTERNET" />
-    <application
+         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    
+        <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="online_job_portal"
+        android:label="online_job_portal" 
         android:icon="@mipmap/ic_launcher">
 
         <meta-data android:name="com.google.android.geo.API_KEY"
@@ -31,5 +34,15 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            
+            <!-- <provider
+    android:name="vn.hunghd.flutterdownloader.DownloadedFileProvider"
+    android:authorities="${applicationId}.flutter_downloader.provider"
+    android:exported="false"
+    android:grantUriPermissions="true">
+    <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/provider_paths"/>
+</provider> -->
     </application>
 </manifest>

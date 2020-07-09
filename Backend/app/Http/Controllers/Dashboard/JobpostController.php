@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\AdminjobpostData;
+use App\ApplyForJobs;
 use App\EmployeerInfo;
 use App\Http\Controllers\Controller;
 use App\JobPosts;
+use App\JobSeekerCv;
+use App\JobseekerInfo;
 use Illuminate\Http\Request;
 
 class JobpostController extends Controller
@@ -46,7 +49,7 @@ class JobpostController extends Controller
                 'jobtype' => $post->jobtype,
                 'designation' => $post->designation,
                 'qualification' => $post->qualification,
-                'specialization' => $post->specialization,
+                'specialization' => $post->specialization, 
                 'skills' => $post->skills,
                 'lastdate' => $post->lastdate,
                 'desc' => $post->desc,
@@ -97,7 +100,30 @@ class JobpostController extends Controller
                 'created_at' => $rpost->created_at,
             );
 
-            return view('dashboard.jobposts.single', compact('post'));
+            $appliedjobseekers = array();
+            foreach (ApplyForJobs::where('job_id', $rpost->id)->get() as $applcation) { 
+                $jobseekerinfo = JobseekerInfo::where('user_id', $applcation->jobseeker_id)->first();
+                if ($jobseekerinfo) {
+
+                    $cv = 'no';
+                    $cvinfo = JobSeekerCv::where('jobseeker_id', $jobseekerinfo->id)->first();
+                    if ($cvinfo) {
+                        $cv = $cvinfo->cv;
+                    }
+
+                    array_push($appliedjobseekers, array(
+                        'jobseeker_id' => $applcation->jobseeker_id,
+                        'created_at' => $applcation->created_at,
+                        'fullname' => $jobseekerinfo->fullname,
+                        'phone_no' => $jobseekerinfo->phone_no,
+                        'address' => $jobseekerinfo->address,
+                        'cv' => $cv,
+                    ));
+                }
+            }
+
+
+            return view('dashboard.jobposts.single', compact('post', 'appliedjobseekers'));
         }
         return redirect('/job-posts');
     }

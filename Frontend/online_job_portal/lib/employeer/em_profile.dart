@@ -110,7 +110,7 @@ class _EmProfileState extends State<EmProfile> {
   void initState() {
     _fetchProfileData();
     super.initState();
-  }
+  } 
 
   Future<void> _fetchProfileData() async {
     setState(() {

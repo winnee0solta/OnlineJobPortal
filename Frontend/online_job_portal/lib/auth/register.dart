@@ -445,6 +445,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           prefs.setInt('user_id', data['user']['id']);
           prefs.setString('type', data['user']['type']);
 
+          Navigator.of(context).popUntil((route) => route.isFirst);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => SplashScreen()),
@@ -495,6 +496,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           prefs.setInt('user_id', data['user']['id']);
           prefs.setString('type', data['user']['type']);
 
+          Navigator.of(context).popUntil((route) => route.isFirst);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => SplashScreen()),
