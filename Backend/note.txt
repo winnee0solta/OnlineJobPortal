@@ -1,3 +1,0 @@
-..dashboard
-analytics for last jobs posted per day with day-date wrt created_at
-analytics for job applied per day 
