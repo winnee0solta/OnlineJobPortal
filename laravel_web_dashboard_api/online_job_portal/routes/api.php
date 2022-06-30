@@ -67,4 +67,4 @@ Route::post('/employer-update-job-post', [EmployersController::class, "updateJob
 Route::post('/employer-remove-job-post', [EmployersController::class, "removeJobPost"]);
 
 Route::post('/employer-job-posts', [JobPostController::class, "emPosts"]);
-Route::post('/employer/job/applied-jobseekers', [JobPostController::class, "appliedJobseekers"]);
+Route::post('/employer/job/applied-jobseekers', [EmployersController::class, "appliedJobseekers"]);

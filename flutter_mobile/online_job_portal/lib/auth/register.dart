@@ -57,8 +57,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       key: _scaffoldKey,
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
           color: Colors.white,
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -435,6 +433,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         'phone_no': phone,
         'address': address,
       });
+      print(response.statusCode);
       if (response.statusCode == 200) {
         print('Response body: ${response.body}');
         var data = json.decode(response.body);
@@ -457,6 +456,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
+      } else {
+        throw Exception(
+            "Request to $url failed with status ${response.statusCode}: ${response.body}");
       }
     } else {
       //show snackbar

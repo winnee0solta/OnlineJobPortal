@@ -132,8 +132,6 @@ class _JsProfileState extends State<JsProfile> {
     super.initState();
   }
 
-   
-
   Future<void> _fetchProfileData() async {
     setState(() {
       isloading = true;
@@ -201,6 +199,8 @@ class _JsProfileState extends State<JsProfile> {
         });
       }
     }
+
+    if (mounted) _fetchProfileData();
   }
 
   void _viewCV() async {
