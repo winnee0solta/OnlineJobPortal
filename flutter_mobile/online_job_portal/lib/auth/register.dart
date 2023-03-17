@@ -425,41 +425,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
       setState(() {
         registering = true;
       });
+      print("Registering Jobseeker");
       var url = ApiHelper.registerJobseeker;
-      var response = await http.post(Uri.parse(url), body: {
+      await http.post(Uri.parse(url), body: {
         'email': email,
         'password': password,
         'fullname': fullname,
         'phone_no': phone,
         'address': address,
-      });
-      print(response.statusCode);
-      if (response.statusCode == 200) {
-        print('Response body: ${response.body}');
-        var data = json.decode(response.body);
-        print('Response body: $data');
-        if (data['status'] == 200) {
-          //store value
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setInt('user_id', data['user']['id']);
-          prefs.setString('type', data['user']['type']);
+      }).then((response) async {
+        print(response.statusCode);
+        if (response.statusCode == 200) {
+          print('Response body: ${response.body}');
+          var data = json.decode(response.body);
+          print('Response body: $data');
+          if (data['status'] == 200) {
+            //store value
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setInt('user_id', data['user']['id']);
+            prefs.setString('type', data['user']['type']);
 
-          Navigator.of(context).popUntil((route) => route.isFirst);
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => SplashScreen()),
-          );
+            Navigator.of(context).popUntil((route) => route.isFirst);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => SplashScreen()),
+            );
+          } else {
+            //show snackbar
+            const snackBar = SnackBar(
+              content: Text("Some error occured"),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         } else {
-          //show snackbar
-          const snackBar = SnackBar(
-            content: Text("Some error occured"),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          throw Exception(
+              "Request to $url failed with status ${response.statusCode}: ${response.body}");
         }
-      } else {
-        throw Exception(
-            "Request to $url failed with status ${response.statusCode}: ${response.body}");
-      }
+      });
     } else {
       //show snackbar
       const snackBar = SnackBar(
@@ -484,40 +486,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
       setState(() {
         registering = true;
       });
+      print("Registering Employeer");
       var url = ApiHelper.registerEmployeer;
-      var response = await http.post(Uri.parse(url), body: {
+      await http.post(Uri.parse(url), body: {
         'email': email,
         'password': password,
         'company_name': companyname,
         'company_phone': companyphone,
         'company_address': companyaddress,
-      });
-      if (response.statusCode == 200) {
-        print('Response body: ${response.body}');
-        var data = json.decode(response.body);
-        print('Response body: $data');
-        if (data['status'] == 200) {
-          //store value
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setInt('user_id', data['user']['id']);
-          prefs.setString('type', data['user']['type']);
+      }).then((response) async {
+        if (response.statusCode == 200) {
+          print('Response body: ${response.body}');
+          var data = json.decode(response.body);
+          print('Response body: $data');
+          if (data['status'] == 200) {
+            //store value
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setInt('user_id', data['user']['id']);
+            prefs.setString('type', data['user']['type']);
 
-          Navigator.of(context).popUntil((route) => route.isFirst);
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => SplashScreen()),
-          );
-        } else {
-          //show snackbar
-          const snackBar = SnackBar(
-            content: Text("Some error occured"),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          setState(() {
-            registering = false;
-          });
+            if (mounted)
+              Navigator.of(context).popUntil((route) => route.isFirst);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => SplashScreen()),
+            );
+          } else {
+            //show snackbar
+            const snackBar = SnackBar(
+              content: Text("Some error occured"),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            setState(() {
+              registering = false;
+            });
+          }
         }
-      }
+      });
     } else {
       //show snackbar
       const snackBar = SnackBar(

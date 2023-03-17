@@ -143,21 +143,21 @@ class _EmSingleJobPostState extends State<EmSingleJobPost> {
           title: Text('Remove Job Post ?'),
           content: const Text('This Post will no longer be available.'),
           actions: <Widget>[
-            FlatButton(
-              textColor: Colors.black,
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              textColor: Colors.red,
-              child: Text('Ok'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                _removePost();
-              },
-            ),
+            // FlatButton(
+            //   textColor: Colors.black,
+            //   child: Text('Cancel'),
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //   },
+            // ),
+            // FlatButton(
+            //   textColor: Colors.red,
+            //   child: Text('Ok'),
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //     _removePost();
+            //   },
+            // ),
           ],
         );
       },

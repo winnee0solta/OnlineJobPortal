@@ -69,7 +69,7 @@ class _JHomeScreenState extends State<JHomeScreen> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.grey[300],
-                              hintText: 'Search College',
+                              hintText: 'Search for jobs...',
                               enabledBorder: OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.transparent),
@@ -282,7 +282,8 @@ class _JHomeScreenState extends State<JHomeScreen> {
 
   Future<List<JobPost>> _fetchPosts() async {
     var url = ApiHelper.jobPosts;
-    var response = await http.get(Uri.parse(url), headers: {'Accept': 'application/json'});
+    var response =
+        await http.get(Uri.parse(url), headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,

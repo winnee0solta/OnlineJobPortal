@@ -12,7 +12,7 @@ import 'em_home.dart';
 class EmEditJopPost extends StatefulWidget {
   final JobPost jobpost;
 
-  EmEditJopPost({Key? key,  required this.jobpost}) : super(key: key);
+  EmEditJopPost({Key? key, required this.jobpost}) : super(key: key);
 
   @override
   _EmEditJopPostState createState() => _EmEditJopPostState();
@@ -281,12 +281,11 @@ class _EmEditJopPostState extends State<EmEditJopPost> {
         lastdateVal == '' ||
         descVal == '') {
       //show snackbar
-       const snackBar = SnackBar(
+      const snackBar = SnackBar(
         content: Text("Empty Fields!"),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-     
       return;
     }
 
@@ -320,7 +319,7 @@ class _EmEditJopPostState extends State<EmEditJopPost> {
         });
 
         Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => EHomeScreen()),
         );
