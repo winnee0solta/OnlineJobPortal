@@ -211,13 +211,13 @@ class AuthController extends Controller
 
 
             $datas = array(
-                'user_id' =>   $data->user_id,
-                'email' =>   $data->email,
-                'token' =>   $data->token,
+                'user_id' => $data->user_id,
+                'email' => $data->email,
+                'token' => $data->token,
             );
 
             Mail::send('mail.password-reset', $datas, function ($message) use ($datas) {
-                $message->from('wtntestserver@gmail.com', 'Online Job Portal');
+                $message->from(config("mail.from.address"), 'Online Job Portal');
                 $message->to($datas['email'], 'Online Job Portal');
                 $message->subject('Password Reset !');
             });
@@ -320,7 +320,7 @@ class AuthController extends Controller
         );
 
         Mail::send('mail.emailverify', $data, function ($message) use ($email, $name) {
-            $message->from('wtntestserver@gmail.com', 'Online Job Portal');
+            $message->from(config("mail.from.address"), 'Online Job Portal');
             $message->to($email, $name);
             $message->subject('Verify Email Address ');
         });
