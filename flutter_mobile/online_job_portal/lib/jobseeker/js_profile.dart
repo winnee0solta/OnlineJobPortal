@@ -105,7 +105,7 @@ class _JsProfileState extends State<JsProfile> {
                             onPressed: () {
                               _uploadCV();
                             },
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).hintColor,
                             child: Padding(
                               padding: const EdgeInsets.all(0.0),
                               child: Text(
@@ -167,37 +167,35 @@ class _JsProfileState extends State<JsProfile> {
       PlatformFile file = result.files.first;
       print(file.path);
 
-      if (file != null) {
-        setState(() {
-          isloading = true;
-        });
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        var userid = prefs.getInt('user_id');
+      setState(() {
+        isloading = true;
+      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var userid = prefs.getInt('user_id');
 
-        Dio dio = new Dio();
-        FormData formdata = new FormData.fromMap({
-          'user_id': userid.toString(),
-          //  'cv': file,
-          'cv': await MultipartFile.fromFile(file.path.toString(),
-              filename: "cv.pdf"),
-        }); // just like JS
+      Dio dio = new Dio();
+      FormData formdata = new FormData.fromMap({
+        'user_id': userid.toString(),
+        //  'cv': file,
+        'cv': await MultipartFile.fromFile(file.path.toString(),
+            filename: "cv.pdf"),
+      }); // just like JS
 
-        var url = ApiHelper.jsUploadCv;
-        var response = await dio.post(url, data: formdata);
-        print(response.data.toString());
-        var data = response.data;
-        if (data['status'] == 200) {
-          //show snackbar
-          const snackBar = SnackBar(
-            content: Text("Cv Uploaded!"),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          _fetchProfileData();
-        }
-        setState(() {
-          isloading = false;
-        });
+      var url = ApiHelper.jsUploadCv;
+      var response = await dio.post(url, data: formdata);
+      print(response.data.toString());
+      var data = response.data;
+      if (data['status'] == 200) {
+        //show snackbar
+        const snackBar = SnackBar(
+          content: Text("Cv Uploaded!"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        _fetchProfileData();
       }
+      setState(() {
+        isloading = false;
+      });
     }
 
     if (mounted) _fetchProfileData();

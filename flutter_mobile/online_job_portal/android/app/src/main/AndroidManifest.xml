@@ -1,14 +1,8 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.online_job_portal">
-     <uses-permission android:name="android.permission.INTERNET" />
-         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-   <application
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application
         android:label="online_job_portal"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-           <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyDMrFLrjNJoVUCMkTmoNi78KuvMFvLJ92c"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

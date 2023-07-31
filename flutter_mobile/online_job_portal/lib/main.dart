@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'OpenSans',
         primaryColor: const Color(0xff002651),
-        accentColor: const Color(0xffff304f),
+        hintColor: const Color(0xffff304f),
       ),
       home: SplashScreen(),
     );

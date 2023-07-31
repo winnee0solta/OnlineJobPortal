@@ -100,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: () {
                       _switchForm('e');
                     },
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).hintColor,
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Text(
@@ -391,7 +391,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             onPressed: () {
               if (!registering) _registerEmployeer(context);
             },
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).hintColor,
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
