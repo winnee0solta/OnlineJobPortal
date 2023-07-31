@@ -105,7 +105,7 @@ class _JsProfileState extends State<JsProfile> {
                             onPressed: () {
                               _uploadCV();
                             },
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).hintColor,
                             child: Padding(
                               padding: const EdgeInsets.all(0.0),
                               child: Text(

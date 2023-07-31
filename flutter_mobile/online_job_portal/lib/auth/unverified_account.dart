@@ -26,7 +26,7 @@ class UnverifiedAccount extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => SplashScreen()),
                 );
               },
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).hintColor,
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
