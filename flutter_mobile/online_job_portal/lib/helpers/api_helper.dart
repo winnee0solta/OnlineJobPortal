@@ -1,5 +1,5 @@
 class ApiHelper {
-  static final String domain = "http://192.168.101.5:8693";
+  static final String domain = "https://onlinejobportal.shresthakishor.com.np";
   static final String baseurl = domain + "/api";
   static final String registerJobseeker = baseurl + "/register-jobseeker";
   static final String registerEmployeer = baseurl + "/register-employeer";
